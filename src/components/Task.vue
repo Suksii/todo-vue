@@ -2,20 +2,23 @@
     <div class="task-container">
         <div class="status">
             <div class="dot"></div>
-            <span>Status</span>
+            <span>{{ task.status }}</span>
         </div>
         <div class="title">
-            <h3>Title</h3>
+            <h3>{{ task.title }}</h3>
         </div>
         <div class="description">
-            <p>Description</p>
+            <p>{{ task.description }}</p>
         </div>
         <div class="date">
-            <p>Date</p>
+            <font-awesome-icon :icon="['far', 'calendar']" class="icon" />
+            <p>{{ task.date }}</p>
         </div>
     </div>
 </template>
-<script setup></script>
+<script setup>
+defineProps(['task'])
+</script>
 
 <style scoped>
 .task-container {
@@ -55,5 +58,8 @@
 
 .date {
     padding: 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 </style>
