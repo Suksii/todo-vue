@@ -42,7 +42,7 @@ const statusClass = (computed(() => {
     flex-direction: column;
     padding: 14px;
     box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.15);
-    min-width: 200px;
+    min-width: 300px;
     width: fit-content;
 }
 

@@ -1,5 +1,6 @@
 <script setup>
 import Task from './components/Task.vue';
+import { computed } from "vue"
 
 const tasks = [
   {
@@ -38,28 +39,38 @@ const tasks = [
     date: '2025-01-02',
   },
 ];
+
+const statuses = ["To Do", "In Progress", "Completed"]
+
+
 </script>
 
 <template>
   <div class="tasks-container">
-    <div v-for="task in tasks" :key="task.id">
-      <Task :task="task" />
+    <div v-for="status in statuses" :key="status">
+      <h2>{{ status }}</h2>
+      <div class="task-list">
+        <Task v-for="task in tasks.filter(task => task.status === status)" :key="task.id" :task="task" />
+      </div>
     </div>
   </div>
-
 </template>
 
 <style scoped>
 .tasks-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 20px;
 }
 
-.rss {
+.tasks-container h2 {
+  padding: 20px 0 50px 0px;
+  text-align: center;
+}
+
+.task-list {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  flex-direction: column;
+  gap: 20px;
 }
 </style>
