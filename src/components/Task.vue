@@ -52,6 +52,7 @@ const statusClass = (computed(() => {
     align-items: center;
     gap: 6px;
     width: fit-content;
+    min-width: 350px;
     padding: 2px 10px;
     border-radius: 6px;
 }

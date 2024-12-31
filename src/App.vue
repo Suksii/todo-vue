@@ -40,21 +40,34 @@ const tasks = [
   },
 ];
 
+import { ref } from 'vue';
 import SearchInput from './components/SearchInput.vue'
+
 const statuses = ["To Do", "In Progress", "Completed"]
 
+
+const searchQuery = ref("");
+const filteredTasks = computed(() => {
+  return tasks.filter(task => {
+    const query = searchQuery.value.toLowerCase();
+    return (
+      task.title.toLowerCase().includes(query) || task.status.toLowerCase().includes(query)
+    )
+  })
+})
 const taskCount = computed(() => {
   return statuses.reduce((counts, status) => {
     counts[status] = tasks.filter(task => task.status === status).length
     return counts
   }, {})
 })
+
 </script>
 
 <template>
   <div class="container">
 
-    <SearchInput />
+    <SearchInput v-model="searchQuery" />
     <div class="tasks-container">
       <div v-for="status in statuses" :key="status" class="status-column">
         <div :class="[status.toLowerCase().replace(' ', '-'), 'status']">
@@ -62,7 +75,7 @@ const taskCount = computed(() => {
           <p class="status-count">{{ taskCount[status] }}</p>
         </div>
         <div class="task-list">
-          <Task v-for="task in tasks.filter(task => task.status === status)" :key="task.id" :task="task" />
+          <Task v-for="task in filteredTasks.filter(task => task.status === status)" :key="task.id" :task="task" />
         </div>
       </div>
     </div>
@@ -91,6 +104,8 @@ const taskCount = computed(() => {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-width: 350px;
+
 }
 
 .status {
