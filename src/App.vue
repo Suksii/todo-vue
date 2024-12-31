@@ -40,6 +40,7 @@ const tasks = [
   },
 ];
 
+import SearchInput from './components/SearchInput.vue'
 const statuses = ["To Do", "In Progress", "Completed"]
 
 const taskCount = computed(() => {
@@ -51,27 +52,38 @@ const taskCount = computed(() => {
 </script>
 
 <template>
-  <div class="tasks-container">
-    <div v-for="status in statuses" :key="status" class="status-column">
-      <div :class="[status.toLowerCase().replace(' ', '-'), 'status']">
-        <h2 class="status-title">{{ status }}</h2>
-        <p class="status-count">{{ taskCount[status] }}</p>
-      </div>
-      <div class="task-list">
-        <Task v-for="task in tasks.filter(task => task.status === status)" :key="task.id" :task="task" />
+  <div class="container">
+
+    <SearchInput />
+    <div class="tasks-container">
+      <div v-for="status in statuses" :key="status" class="status-column">
+        <div :class="[status.toLowerCase().replace(' ', '-'), 'status']">
+          <h2 class="status-title">{{ status }}</h2>
+          <p class="status-count">{{ taskCount[status] }}</p>
+        </div>
+        <div class="task-list">
+          <Task v-for="task in tasks.filter(task => task.status === status)" :key="task.id" :task="task" />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.tasks-container {
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: #f5f5f5;
+  padding: 6rem 0;
+  height: 100vh;
+
+}
+
+.tasks-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  padding: 6rem 0;
-  height: 100vh;
   gap: 20px;
 }
 
@@ -85,6 +97,7 @@ const taskCount = computed(() => {
   display: flex;
   align-items: center;
   padding: 2px 4px;
+  margin-bottom: 20px;
   justify-content: space-between;
 }
 
