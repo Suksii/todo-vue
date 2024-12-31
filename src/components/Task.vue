@@ -42,6 +42,7 @@ const statusClass = (computed(() => {
     flex-direction: column;
     padding: 14px;
     box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.15);
+    background-color: #ffffff;
     min-width: 300px;
     width: fit-content;
 }
@@ -77,26 +78,26 @@ const statusClass = (computed(() => {
 }
 
 .status-to-do {
-    border-top: 3px solid blue;
+    border-top: 3px solid #2196f3;
 }
 
 .status-to-do .dot {
-    background: blue;
+    background: #2196f3;
 }
 
 .status-completed {
-    border-top: 3px solid red;
+    border-top: 3px solid #4caf50;
 }
 
 .status-completed .dot {
-    background: red;
+    background: #4caf50;
 }
 
 .status-in-progress {
-    border-top: 3px solid green;
+    border-top: 3px solid #ff9800;
 }
 
 .status-in-progress .dot {
-    background: green;
+    background: #ff9800;
 }
 </style>

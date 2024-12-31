@@ -42,13 +42,21 @@ const tasks = [
 
 const statuses = ["To Do", "In Progress", "Completed"]
 
-
+const taskCount = computed(() => {
+  return statuses.reduce((counts, status) => {
+    counts[status] = tasks.filter(task => task.status === status).length
+    return counts
+  }, {})
+})
 </script>
 
 <template>
   <div class="tasks-container">
-    <div v-for="status in statuses" :key="status">
-      <h2>{{ status }}</h2>
+    <div v-for="status in statuses" :key="status" class="status-column">
+      <div :class="[status.toLowerCase().replace(' ', '-'), 'status']">
+        <h2 class="status-title">{{ status }}</h2>
+        <p class="status-count">{{ taskCount[status] }}</p>
+      </div>
       <div class="task-list">
         <Task v-for="task in tasks.filter(task => task.status === status)" :key="task.id" :task="task" />
       </div>
@@ -58,19 +66,57 @@ const statuses = ["To Do", "In Progress", "Completed"]
 
 <style scoped>
 .tasks-container {
+  background-color: #f5f5f5;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-evenly;
+  padding: 6rem 0;
+  height: 100vh;
   gap: 20px;
-}
-
-.tasks-container h2 {
-  padding: 20px 0 50px 0px;
-  text-align: center;
 }
 
 .task-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  padding: 2px 4px;
+  justify-content: space-between;
+}
+
+.status h2 {
+  padding: 0;
+  color: white
+}
+
+.status-count {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  aspect-ratio: 1 / 1;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 26px;
+}
+
+.completed {
+  background-color: #4caf50;
+  color: #4caf50;
+}
+
+.in-progress {
+  background-color: #ff9800;
+  color: #ff9800;
+}
+
+.to-do {
+  background-color: #2196f3;
+  color: #2196f3;
 }
 </style>
