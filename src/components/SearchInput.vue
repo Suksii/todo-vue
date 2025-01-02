@@ -1,21 +1,21 @@
 <script setup>
 
-const props = defineProps({
-    modelValue: String,
-})
+import { Icon } from '@iconify/vue/dist/iconify.js';
 
-const emit = defineEmits(["update:modelValue"])
+defineProps({
+    modelValue: {
+        type: String,
+        default: '',
+    },
+});
 
-const updateQuery = (e) => {
-    emit("update:modelValue", e.target.value)
-}
-
+const emit = defineEmits(['update:modelValue']);
 </script>
 
 <template>
     <div class="input-field">
-        <font-awesome-icon icon="magnifying-glass" class="icon" />
-        <input placeholder="Search task" :value="modelValue" @input="updateQuery" />
+        <Icon icon="material-symbols:search-rounded" width="24" height="24" class="icon"/>
+        <input placeholder="Search task" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" />
     </div>
 </template>
 

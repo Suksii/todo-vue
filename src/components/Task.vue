@@ -11,18 +11,22 @@
             <p>{{ task.description }}</p>
         </div>
         <div class="date">
-            <font-awesome-icon :icon="['far', 'calendar']" class="icon" />
+            <Icon icon="material-symbols:calendar-month-outline" width="20" height="20" />
             <p>{{ task.date }}</p>
         </div>
     </div>
 </template>
 <script setup>
 
+import { Icon } from '@iconify/vue/dist/iconify.js';
 import { computed } from 'vue';
 
-const props = defineProps(['task'])
+const props = defineProps({
+    task: Object,
+})
 
-const statusClass = (computed(() => {
+const statusClass = computed(() => {
+    if (!props.task || !props.task.status) return '';
     switch (props.task.status) {
         case 'Completed':
             return 'status-completed';
@@ -32,7 +36,7 @@ const statusClass = (computed(() => {
             return 'status-in-progress'
         default: return ''
     }
-}))
+})
 
 </script>
 

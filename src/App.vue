@@ -1,5 +1,6 @@
 <script setup>
 import Task from './components/Task.vue';
+import { Icon } from '@iconify/vue';
 import { computed } from "vue"
 
 const tasks = [
@@ -49,9 +50,9 @@ const statuses = ["To Do", "In Progress", "Completed"]
 const searchQuery = ref("");
 const filteredTasks = computed(() => {
   return tasks.filter(task => {
-    const query = searchQuery.value.toLowerCase();
-    return (
-      task.title.toLowerCase().includes(query) || task.status.toLowerCase().includes(query)
+    const query = searchQuery.value.toLowerCase().trim();
+
+    return (task.title.toLowerCase().includes(query) || task.status.toLowerCase().includes(query)
     )
   })
 })
@@ -62,11 +63,11 @@ const taskCount = computed(() => {
   }, {})
 })
 
+
 </script>
 
 <template>
   <div class="container">
-
     <SearchInput v-model="searchQuery" />
     <div class="tasks-container">
       <div v-for="status in statuses" :key="status" class="status-column">
@@ -105,7 +106,6 @@ const taskCount = computed(() => {
   flex-direction: column;
   gap: 20px;
   min-width: 350px;
-
 }
 
 .status {
