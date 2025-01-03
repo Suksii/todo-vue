@@ -1,37 +1,46 @@
 <script setup>
 import { Icon } from '@iconify/vue/dist/iconify.js';
+import { ref } from 'vue';
 
 defineProps({
     showModal: Boolean,
-    task: Object,
+    task: {
+        type: Object,
+        default: () => ({ id: null, title: '', description: '', status: '' })
+    },
     statuses: Array
 })
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close', 'save']);
+
+const saveChanges = () => {
+    emit('save', { id: task.id, title: task.title, description: task.description, status: task.status });
+    emit('close')
+}
 
 </script>
 <template>
     <div class="modal-bg">
         <div class="modal-container">
             <Icon icon="material-symbols:close-small-outline" width="24" height="24" class="close-modal"
-                @click="$emit('close')" />
+                @click="emit('close')" />
             <h3 class="modal-title">Change task - {{ task.id }}</h3>
             <div class="input-data">
                 <label>Change title</label>
-                <input />
+                <input v-model="task.title" />
             </div>
             <div class="input-data">
                 <label>Change description</label>
-                <input />
+                <input v-model="task.description" />
             </div>
             <div class="input-data">
                 <label>Select status</label>
-                <select>
+                <select v-model="task.status">
                     <option v-for="status in statuses" :key="status" :value="status">{{ status }}</option>
                 </select>
             </div>
             <div class="actions">
-                <button class="save-button">Save</button>
+                <button class="save-button" @click="saveChanges">Save</button>
                 <button @click="$emit('close')" class="close-button">Close</button>
             </div>
         </div>

@@ -5,7 +5,10 @@
             import Modal from './Modal.vue';
 
             const props = defineProps({
-                task: Object,
+                task: {
+                    type: Object,
+                    default: () => ({ id: null, title: '', description: '', status: '' })
+                },
                 statuses: Array
             })
 

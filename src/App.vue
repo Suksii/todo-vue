@@ -1,9 +1,10 @@
 <script setup>
 import Task from './components/Task.vue';
-import { computed } from "vue"
+import { computed, ref } from "vue"
 import { uid } from 'uid'
+import SearchInput from './components/SearchInput.vue'
 
-const tasks = [
+const tasks = ref([
   {
     id: uid(),
     status: 'Completed',
@@ -39,27 +40,23 @@ const tasks = [
     description: 'Description 5',
     date: '2025-01-02',
   },
-];
+]);
 
-import { ref } from 'vue';
-import SearchInput from './components/SearchInput.vue'
 
 const statuses = ref(["To Do", "In Progress", "Completed"])
 const searchQuery = ref("");
 
 
 const filteredTasks = computed(() => {
-  return tasks.filter(task => {
+  return tasks.value.filter(task => {
     const query = searchQuery.value.toLowerCase().trim();
-    console.log(task.id);
-
     return (task.title.toLowerCase().includes(query) || task.status.toLowerCase().includes(query)
     )
   })
 })
 const taskCount = computed(() => {
   return statuses.value.reduce((counts, status) => {
-    counts[status] = tasks.filter(task => task.status === status).length
+    counts[status] = tasks.value.filter(task => task.status === status).length
     return counts
   }, {})
 })
