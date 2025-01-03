@@ -6,6 +6,7 @@
 
             const props = defineProps({
                 task: Object,
+                statuses: Array
             })
 
             const statusClass = computed(() => {
@@ -21,7 +22,18 @@
                 }
             })
 
-            const showModal = ref(false)
+            const showModal = ref(false);
+            const taskId = ref(null)
+
+            const openModal = (id) => {
+                taskId.value = id;
+                showModal.value = true;
+            }
+
+            const closeModal = () => {
+                taskId.value = null;
+                showModal.value = false;
+            }
 </script>
             
 <template>
@@ -42,10 +54,10 @@
         </div>
         <div class="actions">
             <Icon icon="material-symbols:edit-calendar-outline" width="24" height="24" class="edit"
-                @click="showModal = true" />
+                @click="openModal(task.id)" />
             <Icon icon="material-symbols:delete-outline" width="24" height="24" class="delete" />
         </div>
-        <Modal v-show="showModal" @close="showModal = false" :showModal="showModal" />
+        <Modal v-show="showModal" @close="closeModal" :taskId="taskId" :task="task" :statuses="statuses" />
     </div>
 </template>
 

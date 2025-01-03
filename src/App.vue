@@ -44,10 +44,10 @@ const tasks = [
 import { ref } from 'vue';
 import SearchInput from './components/SearchInput.vue'
 
-const statuses = ["To Do", "In Progress", "Completed"]
-
-
+const statuses = ref(["To Do", "In Progress", "Completed"])
 const searchQuery = ref("");
+
+
 const filteredTasks = computed(() => {
   return tasks.filter(task => {
     const query = searchQuery.value.toLowerCase().trim();
@@ -58,7 +58,7 @@ const filteredTasks = computed(() => {
   })
 })
 const taskCount = computed(() => {
-  return statuses.reduce((counts, status) => {
+  return statuses.value.reduce((counts, status) => {
     counts[status] = tasks.filter(task => task.status === status).length
     return counts
   }, {})
@@ -77,7 +77,8 @@ const taskCount = computed(() => {
           <p class="status-count">{{ taskCount[status] }}</p>
         </div>
         <div class="task-list">
-          <Task v-for="task in filteredTasks.filter(task => task.status === status)" :key="task.id" :task="task" />
+          <Task v-for="task in filteredTasks.filter(task => task.status === status)" :key="task.id" :task="task"
+            :statuses="statuses" />
         </div>
       </div>
     </div>

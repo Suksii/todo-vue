@@ -1,9 +1,13 @@
 <script setup>
 import { Icon } from '@iconify/vue/dist/iconify.js';
 
-defineProps({ showModal: Boolean })
+defineProps({
+    showModal: Boolean,
+    task: Object,
+    statuses: Array
+})
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close']);
 
 </script>
 <template>
@@ -11,6 +15,21 @@ const emit = defineEmits(['close'])
         <div class="modal-container">
             <Icon icon="material-symbols:close-small-outline" width="24" height="24" class="close-modal"
                 @click="$emit('close')" />
+            <h3 class="modal-title">Change task - {{ task.id }}</h3>
+            <div class="input-data">
+                <label>Change title</label>
+                <input />
+            </div>
+            <div class="input-data">
+                <label>Change description</label>
+                <input />
+            </div>
+            <div class="input-data">
+                <label>Select status</label>
+                <select>
+                    <option v-for="status in statuses" :key="status" :value="status">{{ status }}</option>
+                </select>
+            </div>
             <div class="actions">
                 <button class="save-button">Save</button>
                 <button @click="$emit('close')" class="close-button">Close</button>
@@ -31,10 +50,16 @@ const emit = defineEmits(['close'])
 
 .modal-container {
     position: relative;
-    width: 300px;
-    height: 250px;
+    width: 480px;
+    min-width: 350px;
     background: #fff;
     border-radius: 10px;
+    padding: 15px;
+}
+
+.modal-title {
+    text-align: center;
+    padding: 10px 0;
 }
 
 .close-modal {
@@ -83,5 +108,25 @@ button {
     background-color: #d32f2f;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.input-data {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px 0;
+}
+
+.input-data label {
+    font-size: 14px;
+    color: #333;
+}
+
+.input-data input,
+.input-data select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
 }
 </style>
