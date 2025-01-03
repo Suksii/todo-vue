@@ -1,7 +1,8 @@
             <script setup>
 
             import { Icon } from '@iconify/vue/dist/iconify.js';
-            import { computed } from 'vue';
+            import { computed, ref } from 'vue';
+            import Modal from './Modal.vue';
 
             const props = defineProps({
                 task: Object,
@@ -20,6 +21,7 @@
                 }
             })
 
+            const showModal = ref(false)
 </script>
             
 <template>
@@ -39,9 +41,11 @@
             <p>{{ task.date }}</p>
         </div>
         <div class="actions">
-            <Icon icon="material-symbols:edit-calendar-outline" width="24" height="24" class="edit"/>
-            <Icon icon="material-symbols:delete-outline" width="24" height="24" class="delete"/>
+            <Icon icon="material-symbols:edit-calendar-outline" width="24" height="24" class="edit"
+                @click="showModal = true" />
+            <Icon icon="material-symbols:delete-outline" width="24" height="24" class="delete" />
         </div>
+        <Modal v-show="showModal" @close="showModal = false" :showModal="showModal" />
     </div>
 </template>
 
@@ -116,10 +120,12 @@
     justify-content: space-evenly;
     padding-top: 15px;
 }
+
 .actions .edit {
     color: #578E7E;
     cursor: pointer;
 }
+
 .actions .delete {
     color: #F93827;
     cursor: pointer;
