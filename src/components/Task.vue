@@ -1,3 +1,27 @@
+            <script setup>
+
+            import { Icon } from '@iconify/vue/dist/iconify.js';
+            import { computed } from 'vue';
+
+            const props = defineProps({
+                task: Object,
+            })
+
+            const statusClass = computed(() => {
+                if (!props.task || !props.task.status) return '';
+                switch (props.task.status) {
+                    case 'Completed':
+                        return 'status-completed';
+                    case 'To Do':
+                        return 'status-to-do';
+                    case 'In Progress':
+                        return 'status-in-progress'
+                    default: return ''
+                }
+            })
+
+</script>
+            
 <template>
     <div class="task-container" :class="statusClass">
         <div class="status">
@@ -14,31 +38,12 @@
             <Icon icon="material-symbols:calendar-month-outline" width="20" height="20" />
             <p>{{ task.date }}</p>
         </div>
+        <div class="actions">
+            <Icon icon="material-symbols:edit-calendar-outline" width="24" height="24" class="edit"/>
+            <Icon icon="material-symbols:delete-outline" width="24" height="24" class="delete"/>
+        </div>
     </div>
 </template>
-<script setup>
-
-import { Icon } from '@iconify/vue/dist/iconify.js';
-import { computed } from 'vue';
-
-const props = defineProps({
-    task: Object,
-})
-
-const statusClass = computed(() => {
-    if (!props.task || !props.task.status) return '';
-    switch (props.task.status) {
-        case 'Completed':
-            return 'status-completed';
-        case 'To Do':
-            return 'status-to-do';
-        case 'In Progress':
-            return 'status-in-progress'
-        default: return ''
-    }
-})
-
-</script>
 
 <style scoped>
 .task-container {
@@ -104,5 +109,19 @@ const statusClass = computed(() => {
 
 .status-in-progress .dot {
     background: #ff9800;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 15px;
+}
+.actions .edit {
+    color: #578E7E;
+    cursor: pointer;
+}
+.actions .delete {
+    color: #F93827;
+    cursor: pointer;
 }
 </style>

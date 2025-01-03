@@ -69,7 +69,7 @@ const taskCount = computed(() => {
 <template>
   <div class="container">
     <SearchInput v-model="searchQuery" />
-    <div class="tasks-container">
+    <div class="tasks-container" v-if="filteredTasks.length > 0">
       <div v-for="status in statuses" :key="status" class="status-column">
         <div :class="[status.toLowerCase().replace(' ', '-'), 'status']">
           <h2 class="status-title">{{ status }}</h2>
@@ -80,6 +80,7 @@ const taskCount = computed(() => {
         </div>
       </div>
     </div>
+    <div v-else class="no-tasks">No tasks</div>
   </div>
 </template>
 
@@ -146,5 +147,9 @@ const taskCount = computed(() => {
 .to-do {
   background-color: #2196f3;
   color: #2196f3;
+}
+.no-tasks {
+  font-size: x-large;
+  font-weight: bold;
 }
 </style>
