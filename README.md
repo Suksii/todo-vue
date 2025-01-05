@@ -1,5 +1,9 @@
 # Task project (Vue)
 
+## About
+
+## Technical Details
+
 ## Installation
 1. Create a folder on the desktop: `mkdir MyProject` 
 2. Navigate to the desktop folder: `cd %USERPROFILE%/Desktop/MyProject`
