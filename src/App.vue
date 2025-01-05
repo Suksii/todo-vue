@@ -65,6 +65,13 @@ const deleteTask = (taskId) => {
   tasks.value = tasks.value.filter(task => task.id !== taskId)
 }
 
+const editTask = (updatedTask) => {
+  const index = tasks.value.findIndex(task => task.id === updatedTask.id);
+  if (index !== -1) {
+    tasks.value[index] = updatedTask;
+  }
+};
+
 </script>
 
 <template>
@@ -78,7 +85,7 @@ const deleteTask = (taskId) => {
         </div>
         <div class="task-list">
           <Task v-for="task in filteredTasks.filter(task => task.status === status)" :key="task.id" :task="task"
-            :statuses="statuses" @delete="deleteTask" />
+            :statuses="statuses" @delete="deleteTask" @edit="editTask" />
         </div>
       </div>
     </div>

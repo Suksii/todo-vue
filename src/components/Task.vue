@@ -12,7 +12,7 @@ const props = defineProps({
     statuses: Array
 })
 
-const emits = defineEmits(['delete']);
+const emits = defineEmits(['delete', 'edit']);
 
 const statusClass = computed(() => {
     if (!props.task || !props.task.status) return '';
@@ -43,6 +43,11 @@ const closeModal = () => {
 const deleteTask = () => {
     emits('delete', props.task.id)
 };
+
+const editTask = (updatedTask) => {
+    emits('edit', updatedTask);
+    closeModal();
+}
 </script>
 
 <template>
@@ -66,7 +71,8 @@ const deleteTask = () => {
                 @click="openModal(task.id)" />
             <Icon icon="material-symbols:delete-outline" width="24" height="24" class="delete" @click="deleteTask" />
         </div>
-        <Modal v-show="showModal" @close="closeModal" :taskId="taskId" :task="task" :statuses="statuses" />
+        <Modal v-show="showModal" @close="closeModal" :taskId="taskId" :task="task" :statuses="statuses"
+            @save="editTask" />
     </div>
 </template>
 
