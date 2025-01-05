@@ -1,44 +1,50 @@
-            <script setup>
+<script setup>
 
-            import { Icon } from '@iconify/vue/dist/iconify.js';
-            import { computed, ref } from 'vue';
-            import Modal from './Modal.vue';
+import { Icon } from '@iconify/vue/dist/iconify.js';
+import { computed, ref } from 'vue';
+import Modal from './Modal.vue';
 
-            const props = defineProps({
-                task: {
-                    type: Object,
-                    default: () => ({ id: null, title: '', description: '', status: '' })
-                },
-                statuses: Array
-            })
+const props = defineProps({
+    task: {
+        type: Object,
+        default: () => ({ id: null, title: '', description: '', status: '' })
+    },
+    statuses: Array
+})
 
-            const statusClass = computed(() => {
-                if (!props.task || !props.task.status) return '';
-                switch (props.task.status) {
-                    case 'Completed':
-                        return 'status-completed';
-                    case 'To Do':
-                        return 'status-to-do';
-                    case 'In Progress':
-                        return 'status-in-progress'
-                    default: return ''
-                }
-            })
+const emits = defineEmits(['delete']);
 
-            const showModal = ref(false);
-            const taskId = ref(null)
+const statusClass = computed(() => {
+    if (!props.task || !props.task.status) return '';
+    switch (props.task.status) {
+        case 'Completed':
+            return 'status-completed';
+        case 'To Do':
+            return 'status-to-do';
+        case 'In Progress':
+            return 'status-in-progress'
+        default: return ''
+    }
+})
 
-            const openModal = (id) => {
-                taskId.value = id;
-                showModal.value = true;
-            }
+const showModal = ref(false);
+const taskId = ref(null)
 
-            const closeModal = () => {
-                taskId.value = null;
-                showModal.value = false;
-            }
+const openModal = (id) => {
+    taskId.value = id;
+    showModal.value = true;
+}
+
+const closeModal = () => {
+    taskId.value = null;
+    showModal.value = false;
+}
+
+const deleteTask = () => {
+    emits('delete', props.task.id)
+};
 </script>
-            
+
 <template>
     <div class="task-container" :class="statusClass">
         <div class="status">
@@ -58,7 +64,7 @@
         <div class="actions">
             <Icon icon="material-symbols:edit-calendar-outline" width="24" height="24" class="edit"
                 @click="openModal(task.id)" />
-            <Icon icon="material-symbols:delete-outline" width="24" height="24" class="delete" />
+            <Icon icon="material-symbols:delete-outline" width="24" height="24" class="delete" @click="deleteTask" />
         </div>
         <Modal v-show="showModal" @close="closeModal" :taskId="taskId" :task="task" :statuses="statuses" />
     </div>

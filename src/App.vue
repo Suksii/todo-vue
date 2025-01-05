@@ -61,6 +61,9 @@ const taskCount = computed(() => {
   }, {})
 })
 
+const deleteTask = (taskId) => {
+  tasks.value = tasks.value.filter(task => task.id !== taskId)
+}
 
 </script>
 
@@ -75,7 +78,7 @@ const taskCount = computed(() => {
         </div>
         <div class="task-list">
           <Task v-for="task in filteredTasks.filter(task => task.status === status)" :key="task.id" :task="task"
-            :statuses="statuses" />
+            :statuses="statuses" @delete="deleteTask" />
         </div>
       </div>
     </div>
