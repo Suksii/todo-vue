@@ -105,7 +105,7 @@ const editTask = (updatedTask) => {
 <template>
   <div class="container">
     <SearchInput v-model="searchQuery" />
-    <div class="tasks-container" v-if="filteredTasks.length > 0">
+    <div class="tasks-container">
       <div v-for="status in statuses" :key="status" class="status-column">
         <div :class="[status.toLowerCase().replace(' ', '-'), 'status']">
           <h2 class="status-title">{{ status }}</h2>
@@ -119,7 +119,7 @@ const editTask = (updatedTask) => {
         </div>
       </div>
     </div>
-    <div v-else class="no-tasks">No tasks</div>
+    <div v-if="filteredTasks.length === 0" class="no-tasks">No tasks</div>
   </div>
 </template>
 
@@ -202,5 +202,6 @@ const editTask = (updatedTask) => {
 .no-tasks {
   font-size: x-large;
   font-weight: bold;
+  padding-top: 6rem;
 }
 </style>
