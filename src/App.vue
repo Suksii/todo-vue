@@ -86,6 +86,7 @@ const editTask = (updatedTask) => {
         <div class="task-list">
           <Task v-for="task in filteredTasks.filter(task => task.status === status)" :key="task.id" :task="task"
             :statuses="statuses" @delete="deleteTask" @edit="editTask" />
+          <button :class="[status.toLowerCase().replace(' ', '-')]">Add task</button>
         </div>
       </div>
     </div>
@@ -116,6 +117,17 @@ const editTask = (updatedTask) => {
   flex-direction: column;
   gap: 20px;
   min-width: 350px;
+}
+
+.task-list button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
 }
 
 .status {

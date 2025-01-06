@@ -25,7 +25,7 @@ const saveChanges = () => {
     <div class="modal-bg">
         <div class="modal-container">
             <Icon icon="material-symbols:close-small-outline" width="24" height="24" class="close-modal"
-                @click="emit('close')" />
+                @click="emits('close')" />
             <h3 class="modal-title">Change task - {{ updatedTask.id }}</h3>
             <div class="input-data">
                 <label>Change title</label>
@@ -43,7 +43,7 @@ const saveChanges = () => {
             </div>
             <div class="actions">
                 <button class="save-button" @click="saveChanges">Save</button>
-                <button @click="$emit('close')" class="close-button">Close</button>
+                <button @click="emits('close')" class="close-button">Close</button>
             </div>
         </div>
     </div>
@@ -93,7 +93,7 @@ button {
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
     font-weight: 600;
-    border-radius: 8px;
+    border-radius: 4px;
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
