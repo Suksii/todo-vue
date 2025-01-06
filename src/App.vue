@@ -48,7 +48,7 @@ const statuses = ref(["To Do", "In Progress", "Completed"])
 const searchQuery = ref("");
 const showAddModal = ref(false);
 const newTask = ref({
-  id: uid(),
+  id: null,
   title: '',
   description: '',
   status: '',
@@ -57,7 +57,7 @@ const newTask = ref({
 
 const openAddModal = (status) => {
   newTask.value = {
-    id: uid(),
+    id: null,
     title: '',
     description: '',
     status,
@@ -71,7 +71,7 @@ const closeAddModal = () => {
 }
 
 const addTask = (task) => {
-  tasks.value.push(task);
+  tasks.value.push({ ...task, id: uid() });
   closeAddModal();
 }
 

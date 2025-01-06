@@ -33,8 +33,7 @@ const saveChanges = () => {
         <div class="modal-container">
             <Icon icon="material-symbols:close-small-outline" width="24" height="24" class="close-modal"
                 @click="emits('close')" />
-            <h3 v-if="updatedTask.id" class="modal-title">{{ 'Change task - ' + updatedTask.id }}</h3>
-            <h3 v-else class="modal-title">Add new task</h3>
+            <h3 class="modal-title">{{ updatedTask.id ? 'Change task - ' + updatedTask.id : 'Add new task' }}</h3>
             <div class="input-data">
                 <label>{{ updatedTask.id ? 'Change title' : 'Add title' }}</label>
                 <input v-model="updatedTask.title" />
