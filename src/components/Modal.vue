@@ -1,6 +1,6 @@
 <script setup>
 import { Icon } from '@iconify/vue/dist/iconify.js';
-import { ref } from 'vue';
+import { reactive, watch } from 'vue';
 
 const props = defineProps({
     showModal: Boolean,
@@ -13,10 +13,17 @@ const props = defineProps({
 
 const emits = defineEmits(['close', 'save']);
 
-const updatedTask = ref({ ...props.task });
+const updatedTask = reactive({ ...props.task });
+
+watch(() => props.task,
+    (newTask) => {
+        Object.assign(updatedTask, newTask);
+    },
+    { immediate: true }
+);
 
 const saveChanges = () => {
-    emits('save', updatedTask.value);
+    emits('save', updatedTask);
     emits('close');
 }
 
@@ -26,13 +33,14 @@ const saveChanges = () => {
         <div class="modal-container">
             <Icon icon="material-symbols:close-small-outline" width="24" height="24" class="close-modal"
                 @click="emits('close')" />
-            <h3 class="modal-title">Change task - {{ updatedTask.id }}</h3>
+            <h3 v-if="updatedTask.id" class="modal-title">{{ 'Change task - ' + updatedTask.id }}</h3>
+            <h3 v-else class="modal-title">Add new task</h3>
             <div class="input-data">
-                <label>Change title</label>
+                <label>{{ updatedTask.id ? 'Change title' : 'Add title' }}</label>
                 <input v-model="updatedTask.title" />
             </div>
             <div class="input-data">
-                <label>Change description</label>
+                <label>{{ updatedTask.id ? 'Change description' : 'Add description' }}</label>
                 <input v-model="updatedTask.description" />
             </div>
             <div class="input-data">

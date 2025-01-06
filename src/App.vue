@@ -3,6 +3,7 @@ import Task from './components/Task.vue';
 import { computed, ref } from "vue"
 import { uid } from 'uid'
 import SearchInput from './components/SearchInput.vue'
+import Modal from './components/Modal.vue';
 
 const tasks = ref([
   {
@@ -45,7 +46,34 @@ const tasks = ref([
 
 const statuses = ref(["To Do", "In Progress", "Completed"])
 const searchQuery = ref("");
+const showAddModal = ref(false);
+const newTask = ref({
+  id: uid(),
+  title: '',
+  description: '',
+  status: '',
+  date: new Date()
+})
 
+const openAddModal = (status) => {
+  newTask.value = {
+    id: uid(),
+    title: '',
+    description: '',
+    status,
+    date: new Date()
+  }
+  showAddModal.value = true;
+}
+
+const closeAddModal = () => {
+  showAddModal.value = false;
+}
+
+const addTask = (task) => {
+  tasks.value.push(task);
+  closeAddModal();
+}
 
 const filteredTasks = computed(() => {
   return tasks.value.filter(task => {
@@ -86,7 +114,8 @@ const editTask = (updatedTask) => {
         <div class="task-list">
           <Task v-for="task in filteredTasks.filter(task => task.status === status)" :key="task.id" :task="task"
             :statuses="statuses" @delete="deleteTask" @edit="editTask" />
-          <button :class="[status.toLowerCase().replace(' ', '-')]">Add task</button>
+          <button :class="[status.toLowerCase().replace(' ', '-')]" @click="openAddModal(status)">Add task</button>
+          <Modal v-if="showAddModal" :task="newTask" :statuses="statuses" @close="closeAddModal" @save="addTask" />
         </div>
       </div>
     </div>
