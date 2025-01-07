@@ -43,6 +43,14 @@ const tasks = ref([
   },
 ]);
 
+const formatDate = () => {
+  const date = new Date();
+  const day = String(date.getDate()).padStart(2, '0');
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const month = monthNames[date.getMonth()];
+  const year = date.getFullYear();
+  return `${day}. ${month} ${year}.`
+}
 
 const statuses = ref(["To Do", "In Progress", "Completed"])
 const searchQuery = ref("");
@@ -52,7 +60,7 @@ const newTask = ref({
   title: '',
   description: '',
   status: '',
-  date: new Date()
+  date: formatDate()
 })
 
 const openAddModal = (status) => {
@@ -61,7 +69,7 @@ const openAddModal = (status) => {
     title: '',
     description: '',
     status,
-    date: new Date()
+    date: formatDate()
   }
   showAddModal.value = true;
 }
